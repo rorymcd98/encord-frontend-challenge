@@ -1,27 +1,20 @@
-# React + TypeScript + Vite
+Here is a frontend challenge I did for encord - the task can be found here (as of 15/08/2023): https://encord.com/static/encord-frontend-challenge-06ac443cdfeb4b088ed4723631364918.pdf
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The task involved creating a frontend app with 2 tabs, each table containing a table and some basic functionality to simulate submitting then viewing some analysis tasks.
 
-Currently, two official plugins are available:
+This app is fundamnetally quite similar to my Spot the Imag-gen Difference app I made https://github.com/rorymcd98/spot-the-image-gen
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# What I think I did well?:
+* File structure is sensible.
+* Component organisation is good, not too much drilling.
+* `Table.tsx` is cool/reusable-ish - it accepts a component and a generic then renders table rows.
+* I think I demonstrate a good grasp of TypeScript, using some features like `Omit`, `generics`, `as const` etc.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+# What I could have done better?:
+* Obviously UI needs work. I could have also reused some button components and such.
+* Used different packages:
+    * Zustand - stores are just better than contexts in most situations imo.
+    * Zod (schema validation) - I heard you guys (encord) use a cool python-typescript package which does this so I didn't feel the need to demonstrate Zod.
+    * Elastic EUI components - Prebuilt UI components would have made a nicer looking app, but I would not have been able to demonstrate tailwind.
+    * React-query - This would have given me some nicer status messages for calling the API, but axios was sufficient for this use.
+* App.tsx was getting a bit top-heavy, I could have wrapped all the context providers in a single component.
