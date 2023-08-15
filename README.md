@@ -6,7 +6,7 @@ This app is fundamnetally quite similar to my Spot the Imag-gen Difference app I
 
 # To run:
 
-The JSON server should start concurrently.
+The JSON server should start concurrently (apologies npm users :))
 
 `yarn build && yarn preview`
 
