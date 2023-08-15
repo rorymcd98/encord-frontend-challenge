@@ -1,29 +1,21 @@
 import { FC, useContext } from "react";
-import { ImageUploadsContext } from "../../contexts";
+import { ImageUploadsContext, ImageMetadata } from "../../contexts";
 import ImagesTableRow from "./ImagesTableRow";
+import Table from "../table/Table";
 
 const ImagesTable: FC = () => {
-  const { imagesMetadata } = useContext(ImageUploadsContext);
-  const tableRows = imagesMetadata.map((imageMeta) => (
-    <ImagesTableRow
-      key={imageMeta.fileName + imageMeta.timeOfUpload.toString()}
-      imageMetadata={imageMeta}
-    />
-  ));
-  const tableHeader = (
-    <thead>
-      <tr>
-        <th className="py-2 text-left flex-1">File Name</th>
-        <th className="py-2 text-left flex-3">File Size</th>
-        <th className="py-2 text-left flex-3">Time of Upload</th>
-      </tr>
-    </thead>
-  );
+  const { images } = useContext(ImageUploadsContext);
+  const tableData = images.map(({ metadata }) => metadata);
+  const tableHeaders = ["File Name", "File Size", "Time of Upload"];
+  const generateRowKey = (rowData: ImageMetadata) =>
+    rowData.fileName + rowData.timeOfUpload.toISOString();
   return (
-    <table className="table-auto w-full relative border-gray-900">
-      {tableHeader}
-      {tableRows}
-    </table>
+    <Table
+      tableData={tableData}
+      tableHeaders={tableHeaders}
+      generateRowKey={generateRowKey}
+      RowComponent={ImagesTableRow}
+    />
   );
 };
 

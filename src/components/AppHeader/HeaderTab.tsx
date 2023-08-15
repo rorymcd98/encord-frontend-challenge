@@ -1,6 +1,5 @@
 import { FC, useContext } from "react";
 import { AppTab, TabContext } from "../../contexts";
-import * as cn from "classnames";
 interface HeaderTabProps {
   appTab: AppTab;
 }
@@ -10,19 +9,14 @@ const HeaderTab: FC<HeaderTabProps> = ({ appTab }) => {
   const handleTabClick = () => {
     setSelectedTab(appTab);
   };
-  const tabClasses = cn(
-    "bg-white",
-    "border-black border-solid border-2 rounded-2xl",
-    "text-black",
-    "text-center",
-    "px-2",
-    {
-      "text-red-500": selectedTab === appTab,
-    }
-  );
+
+  const textColor = selectedTab === appTab ? "text-red-500" : "text-black";
 
   return (
-    <button className={tabClasses} onMouseDown={handleTabClick}>
+    <button
+      className={`bg-white border-black border-solid border-2 roudned-2xl px-2 ${textColor}`}
+      onMouseDown={handleTabClick}
+    >
       {appTab}
     </button>
   );

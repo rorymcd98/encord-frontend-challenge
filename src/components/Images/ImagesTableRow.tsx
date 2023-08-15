@@ -3,7 +3,7 @@ import { ImageMetadata } from "../../contexts";
 import PredictButton from "./PredictButton";
 
 interface ImagesTableRowProps {
-  imageMetadata: ImageMetadata;
+  rowData: ImageMetadata;
 }
 const formatFileSize = (fileSize: number) => {
   let formattedFileSize;
@@ -19,7 +19,7 @@ const formatFileSize = (fileSize: number) => {
   return `${formattedFileSize} ${suffix}`;
 };
 
-const formatTimeOfUpload = (timeOfUpload: Date) => {
+export const formatTimestamp = (timeOfUpload: Date) => {
   const options: Intl.DateTimeFormatOptions = {
     dateStyle: "short",
     timeStyle: "short",
@@ -27,23 +27,23 @@ const formatTimeOfUpload = (timeOfUpload: Date) => {
   return timeOfUpload.toLocaleString("en-US", options);
 };
 const ImagesTableRow: FC<ImagesTableRowProps> = ({
-  imageMetadata: { fileName, imageSize, timeOfUpload },
+  rowData: { fileName, imageSize, timeOfUpload },
 }) => {
   const formattedFileName =
     fileName.length > 25
       ? `${fileName.slice(0, 5)}...${fileName.slice(-17)})}`
       : fileName;
   const formattedImageSize = formatFileSize(imageSize);
-  const formattedTimeOfUpload = formatTimeOfUpload(timeOfUpload);
+  const formattedTimeOfUpload = formatTimestamp(timeOfUpload);
   const predictButton = <PredictButton fileName={fileName} />;
 
   // I would probably turn td into a component if this were a real app
   return (
     <tr>
-      <td className="border">{formattedFileName}</td>
-      <td className="border">{formattedImageSize}</td>
-      <td className="border">{formattedTimeOfUpload}</td>
-      <td className="border flex justify-center">{predictButton}</td>
+      <td>{formattedFileName}</td>
+      <td>{formattedImageSize}</td>
+      <td>{formattedTimeOfUpload}</td>
+      <td className=" flex justify-center border-none">{predictButton}</td>
     </tr>
   );
 };

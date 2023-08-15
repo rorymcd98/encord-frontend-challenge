@@ -1,49 +1,66 @@
-import { useState, useEffect } from "react";
+import { useState, ReactNode } from "react";
 import AppHeader from "./components/AppHeader/AppHeader";
 import {
   AppTab,
   ImageMetadata,
+  ImageUpload,
   ImageUploadsContext,
+  Prediction,
   PredictionContext,
   TabContext,
-  initialImagesMeta_test,
+  initialImages_test,
 } from "./contexts";
 import Images from "./components/Images/Images";
 import AppContainer from "./components/AppContainer";
 import AppDescription from "./components/AppDescription";
+import { v4 as uuidv4 } from "uuid";
+import Predictions from "./components/Predictions/Predictions";
+import { callPredictApi } from "./lib/callApi";
 
 function App() {
   const [selectedTab, setSelectedTab] = useState<AppTab>("Images");
-  const [imagesMetadata, setImagesMetadata] = useState<ImageMetadata[]>([]);
-  const [currentPrediction, setCurrentPrediction] = useState<string | null>(
+  const [images, setImages] = useState<ImageUpload[]>(initialImages_test);
+  const [currentPredictionId, setCurrentPredictionId] = useState<string | null>(
     null
   );
-
-  // simulate some db delay
-  useEffect(() => {
-    setTimeout(() => {
-      setImagesMetadata(initialImagesMeta_test);
-    }, 1250);
-  }, []);
-
-  const uploadImage = (fileName: string, imageSize: number) => {
-    const newImageMeta: ImageMetadata = {
-      fileName,
-      timeOfUpload: new Date(),
-      imageSize: imageSize,
+  const [predictions, setPredictions] = useState<Prediction[]>([]);
+  // In this app I don't use useCallback - there is no clear need for it in terms of optimisation or caching.
+  const pushPrediction = async (
+    uncalledPrediction: Omit<Prediction, "id" | "predictionResponse">
+  ) => {
+    const prediction = {
+      ...uncalledPrediction,
+      predictionResponse: await callPredictApi(),
+      id: uuidv4(),
     };
-    setImagesMetadata([...imagesMetadata, newImageMeta]);
+    setPredictions([...predictions, prediction]);
+  };
+
+  const handleUploadImage = (imageFile: File) => {
+    const newImageMeta: ImageMetadata = {
+      fileName: imageFile.name,
+      timeOfUpload: new Date(),
+      imageSize: imageFile.size,
+    };
+    const newImage: ImageUpload = {
+      image: imageFile,
+      metadata: newImageMeta,
+    };
+    setImages([...images, newImage]);
   };
 
   const imagesAppDescription = "Upload images and view them in a table.";
   const predictionsAppDescription = "View prediction results.";
   let selectedAppDescription: string;
+  let selectedAppComponent: ReactNode;
   switch (selectedTab) {
     case "Images":
       selectedAppDescription = imagesAppDescription;
+      selectedAppComponent = <Images />;
       break;
     case "Predictions":
       selectedAppDescription = predictionsAppDescription;
+      selectedAppComponent = <Predictions />;
       break;
     default:
       selectedAppDescription = "No app selected";
@@ -52,7 +69,11 @@ function App() {
   return (
     <>
       <ImageUploadsContext.Provider
-        value={{ imagesMetadata, setImagesMetadata, uploadImage }}
+        value={{
+          images,
+          setImages,
+          handleUploadImage,
+        }}
       >
         <TabContext.Provider
           value={{
@@ -61,12 +82,17 @@ function App() {
           }}
         >
           <PredictionContext.Provider
-            value={{ currentPrediction, setCurrentPrediction }}
+            value={{
+              currentPredictionId,
+              setCurrentPredictionId,
+              predictions,
+              pushPrediction,
+            }}
           >
             <AppHeader />
             <AppContainer>
               <AppDescription>{selectedAppDescription}</AppDescription>
-              {selectedTab === "Images" && <Images />}
+              {selectedAppComponent}
             </AppContainer>
           </PredictionContext.Provider>
         </TabContext.Provider>
