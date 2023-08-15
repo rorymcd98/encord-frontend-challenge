@@ -30,7 +30,8 @@ or
   - Elastic EUI components - Prebuilt UI components would have made a nicer looking app, but I would not have been able to demonstrate tailwind.
   - React-query - This would have given me some nicer status messages for calling the API, but axios was sufficient for this use.
 - App.tsx was getting a bit top-heavy, I could have wrapped all the context providers in a single component.
-- My modals aren't great - there is no global 'PredictModal' you could end up with dozens of popups.
+- My PredictModal isn't well implemented - you can end up with dozens of modals as there is no 'global' modal.
+- Improved linting, config, cleanup of unused depencies and files, better management of `package.json`
 
 # Where I deviated from the brief:
 
