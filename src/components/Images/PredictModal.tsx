@@ -73,7 +73,13 @@ const PredictModal: FC<PredictModalProps> = ({ fileName, closeModal }) => {
   const closeButton = <CloseButton closeModal={closeModal} />;
   return (
     <>
-      <div className="bg-black opacity-50 fixed inset-0 z-40"></div>
+      <div
+        onClick={(e) => {
+          // prevent click from propagating past the modal
+          e.stopPropagation();
+        }}
+        className="bg-black opacity-50 fixed inset-0 z-40"
+      ></div>
       <div className="p-3 bg-slate-300 rounded-l border-gray-500 absolute z-50 top-1/2 left-1/2 transform -translate-x-1/2">
         <div className="absolute top-2 right-2">{closeButton}</div>
         <h2 className="font-bold text-gray-600 ">

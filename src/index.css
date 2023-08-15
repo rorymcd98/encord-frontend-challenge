@@ -31,10 +31,15 @@ a:hover {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 800px;
+  width: 1200px;
   background-color: #213547;
   left: 50%;
   transform: translateX(-50%);
+}
+@media screen and (max-width: 1200px) {
+  #root {
+    width: 100%;
+  }
 }
 
 body {

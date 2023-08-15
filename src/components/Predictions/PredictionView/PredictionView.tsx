@@ -1,11 +1,4 @@
-import {
-  FC,
-  useContext,
-  useRef,
-  useState,
-  useMemo,
-  SyntheticEvent,
-} from "react";
+import { FC, useContext, useState, useMemo, SyntheticEvent } from "react";
 import { ImageUploadsContext, Prediction } from "../../../contexts";
 import PredictionViewOverlay from "./PredictionViewOverlay";
 

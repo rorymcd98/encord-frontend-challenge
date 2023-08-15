@@ -6,6 +6,7 @@ interface ImagesTableRowProps {
   rowData: ImageMetadata;
 }
 const formatFileSize = (fileSize: number) => {
+  // Ignore 1024 vs 1000
   let formattedFileSize;
   let suffix: string = "B";
   if (fileSize > 1e3) {
