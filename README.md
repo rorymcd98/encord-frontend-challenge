@@ -2,7 +2,7 @@ Here is a frontend challenge I did for encord - the task can be found here (as o
 
 The task involved creating a frontend app with 2 tabs, each table containing a table and some basic functionality to simulate submitting then viewing some analysis tasks.
 
-This app is fundamnetally quite similar to my Spot the Imag-gen Difference app I made https://github.com/rorymcd98/spot-the-image-gen
+I worked on a very similar app previously, please do check it out! https://github.com/rorymcd98/spot-the-image-gen
 
 # To run:
 
